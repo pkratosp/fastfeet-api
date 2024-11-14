@@ -3,24 +3,24 @@ import { RemoveDeliveryManUseCase } from "./remove-delivery-man-use-case"
 import { makeDeliveryMan } from "test/factories/make-delivery-man"
 
 let inMemoryDeliveryManRepository: InMemoryDeliveryManRepository
-let removeDeliveryManUseCase: RemoveDeliveryManUseCase
+let sut: RemoveDeliveryManUseCase
 
-describe("Remove delivery man", () => {
+describe("RemoveDeliveryManUseCase", () => {
 
     beforeEach(() => {
         inMemoryDeliveryManRepository = new InMemoryDeliveryManRepository()
-        removeDeliveryManUseCase = new RemoveDeliveryManUseCase(inMemoryDeliveryManRepository)
+        sut = new RemoveDeliveryManUseCase(inMemoryDeliveryManRepository)
     })
 
-    it("should be delete delivery man", async () => {
+    it("should be able delete delivery man", async () => {
 
-        const deliveryManFactory = makeDeliveryMan()
+        const fakeDeliveryMan = makeDeliveryMan()
 
-        inMemoryDeliveryManRepository.create(deliveryManFactory)
+        inMemoryDeliveryManRepository.create(fakeDeliveryMan)
 
-        const removeDeliveryMan = await removeDeliveryManUseCase.execute(deliveryManFactory)
+        const result = await sut.execute(fakeDeliveryMan)
 
-        expect(removeDeliveryMan.value).toEqual('ok')
+        expect(result.value).toEqual('ok')
         expect(inMemoryDeliveryManRepository.items).toHaveLength(0)
     })
 

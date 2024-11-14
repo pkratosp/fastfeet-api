@@ -3,7 +3,7 @@ import { UniqueEntityID } from "../../../../core/entities/unique-entity";
 import { Optional } from "../../../../core/types/optional";
 
 
-interface PackageProps {
+export interface PackageProps {
     trackingNumber: string
     description: string
     weightAndDimension: string
@@ -18,12 +18,27 @@ export class Package extends Entity<PackageProps> {
         return this.props.trackingNumber
     }
 
+    set trackingNumber(trackingNumber: string) {
+        this.props.trackingNumber = trackingNumber
+        this.touch()
+    }
+
     get description() {
         return this.props.description
     }
 
+    set description(description: string) {
+        this.props.description = description
+        this.touch()
+    }
+
     get weightAndDimension() {
         return this.props.weightAndDimension
+    }
+
+    set weightAndDimension(weightAndDimension: string) {
+        this.props.weightAndDimension = weightAndDimension
+        this.touch()
     }
 
     get createdAt() {
@@ -32,6 +47,10 @@ export class Package extends Entity<PackageProps> {
 
     get updatedAt() {
         return this.props.updatedAt
+    }
+
+    private touch() {
+        this.props.updatedAt = new Date()
     }
 
     static create(

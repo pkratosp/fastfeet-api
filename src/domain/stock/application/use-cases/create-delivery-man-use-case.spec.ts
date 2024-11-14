@@ -2,17 +2,17 @@ import { InMemoryDeliveryManRepository } from "test/in-memory-delivery-man-repos
 import { CreateDeliveryManUseCase } from "./create-delivery-man-use-case"
 
 let inMemoryDeliveryManRepository: InMemoryDeliveryManRepository
-let createDeliveryManUseCase: CreateDeliveryManUseCase
+let sut: CreateDeliveryManUseCase
 
-describe("Create delivery man", () => {
+describe("CreateDeliveryManUseCase", () => {
 
     beforeEach(() => {
         inMemoryDeliveryManRepository = new InMemoryDeliveryManRepository()
-        createDeliveryManUseCase = new CreateDeliveryManUseCase(inMemoryDeliveryManRepository)
+        sut = new CreateDeliveryManUseCase(inMemoryDeliveryManRepository)
     })
 
-    it("should be create delivery man", async () => {
-        const deliveryMan = await createDeliveryManUseCase.execute({
+    it("should be able create delivery man", async () => {
+        const result = await sut.execute({
             city: 'city teste',
             cpf: 333,
             dateOfBirth: '13/11/2000',
@@ -25,8 +25,8 @@ describe("Create delivery man", () => {
             street: 'street test'
         })
 
-        expect(deliveryMan.isRight()).toEqual(true)
-        expect(deliveryMan.value?.deliveryMan.fullName).toEqual(expect.any(String))
+        expect(result.isRight()).toEqual(true)
+        expect(result.value?.deliveryMan.fullName).toEqual(expect.any(String))
     })
 
 })

@@ -3,34 +3,38 @@ import { EditDeliveryManUseCase } from "./edit-delivery-man-use-case"
 import { makeDeliveryMan } from "test/factories/make-delivery-man"
 
 let inMemoryDeliveryManRepository: InMemoryDeliveryManRepository
-let editDeliverymanUseCase: EditDeliveryManUseCase
+let sut: EditDeliveryManUseCase
 
-describe("Edit delivery man", () => {
+describe("EditDeliveryManUseCase", () => {
 
     beforeEach(() => {
         inMemoryDeliveryManRepository = new InMemoryDeliveryManRepository()
-        editDeliverymanUseCase = new EditDeliveryManUseCase(inMemoryDeliveryManRepository)
+        sut = new EditDeliveryManUseCase(inMemoryDeliveryManRepository)
     })
 
     it("should be edit delivery man", async () => {
 
-        const deliveryManFactory = makeDeliveryMan()
+        const fakeDeliveryMan = makeDeliveryMan()
 
-        inMemoryDeliveryManRepository.create(deliveryManFactory)
+        inMemoryDeliveryManRepository.create(fakeDeliveryMan)
 
-        const edit = await editDeliverymanUseCase.execute({
-            cpf: deliveryManFactory.cpf,
-            email: deliveryManFactory.email,
-            phone: deliveryManFactory.phone,
-            state: deliveryManFactory.state,
+        const result = await sut.execute({
+            cpf: fakeDeliveryMan.cpf,
+            email: fakeDeliveryMan.email,
+            phone: fakeDeliveryMan.phone,
+            state: fakeDeliveryMan.state,
             city: 'new city',
-            neighborhood: deliveryManFactory.neighborhood,
-            street: deliveryManFactory.street,
-            numberAddress: deliveryManFactory.numberAddress,
+            neighborhood: fakeDeliveryMan.neighborhood,
+            street: fakeDeliveryMan.street,
+            numberAddress: fakeDeliveryMan.numberAddress,
         })
 
-        expect(edit.isRight()).toEqual(true)
-        expect(edit.value?.deliveryMan.city).toEqual('new city')
+        expect(result.isRight()).toEqual(true)
+        expect(inMemoryDeliveryManRepository.items[0]).toEqual(
+            expect.objectContaining({
+                city: 'new city'
+            })
+        )
     })
 
 })

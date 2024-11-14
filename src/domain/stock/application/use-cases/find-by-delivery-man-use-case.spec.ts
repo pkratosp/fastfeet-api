@@ -3,25 +3,29 @@ import { FindByDeliveryManUseCase } from "./find-by-delivery-man-use-case"
 import { makeDeliveryMan } from "test/factories/make-delivery-man"
 
 let inMemoryDeliveryManRepository: InMemoryDeliveryManRepository
-let findByDeliveryManUseCase: FindByDeliveryManUseCase
+let sut: FindByDeliveryManUseCase
 
-describe("Find by cpf delivry man", async () => {
+describe("FindByDeliveryManUseCase", async () => {
 
     beforeEach(() => {
         inMemoryDeliveryManRepository = new InMemoryDeliveryManRepository()
-        findByDeliveryManUseCase = new FindByDeliveryManUseCase(inMemoryDeliveryManRepository)
+        sut = new FindByDeliveryManUseCase(inMemoryDeliveryManRepository)
     })
 
-    it("should be find delivery man by cpf", async () => {
+    it("should be able find delivery man by cpf", async () => {
 
-        const deliveryManFactory = makeDeliveryMan({ cpf: 3333 })
+        const fakeDeliveryMan = makeDeliveryMan({ cpf: 3333 })
 
-        inMemoryDeliveryManRepository.create(deliveryManFactory)
+        inMemoryDeliveryManRepository.create(fakeDeliveryMan)
 
-        const findDeliveryMan = await findByDeliveryManUseCase.execute({ cpf: 3333 })
+        const result = await sut.execute({ cpf: 3333 })
 
-        expect(findDeliveryMan.isRight()).toEqual(true)
-        expect(findDeliveryMan.value?.deliveryMan.cpf).toEqual(3333)
+        expect(result.isRight()).toEqual(true)
+        expect(inMemoryDeliveryManRepository.items[0]).toEqual(
+            expect.objectContaining({
+                cpf: 3333
+            })
+        )
     })
 
 })

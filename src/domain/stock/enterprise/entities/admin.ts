@@ -6,6 +6,7 @@ export interface AdminProps {
     cpf: number
     phone: number
     email: string
+    password: string
 }
 
 export class Admin extends Entity<AdminProps> {
@@ -24,6 +25,10 @@ export class Admin extends Entity<AdminProps> {
 
     get email() {
         return this.props.email
+    }
+
+    get password() {
+        return this.props.password
     }
 
     static create(
