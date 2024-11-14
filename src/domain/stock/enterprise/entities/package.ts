@@ -1,5 +1,5 @@
 import { Entity } from "../../../../core/entities/entity";
-import { UniqueEntity } from "../../../../core/entities/unique-entity";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity";
 import { Optional } from "../../../../core/types/optional";
 
 
@@ -36,7 +36,7 @@ export class Package extends Entity<PackageProps> {
 
     static create(
         props: Optional<PackageProps, 'createdAt'>,
-        id?: UniqueEntity
+        id?: UniqueEntityID
     ) {
         const _package = new Package({
             ...props,

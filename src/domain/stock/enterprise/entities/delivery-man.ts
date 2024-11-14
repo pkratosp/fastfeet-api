@@ -1,5 +1,6 @@
+import { AggregateRoot } from "../../../../core/entities/aggregate-root";
 import { Entity } from "../../../../core/entities/entity";
-import { UniqueEntity } from "../../../../core/entities/unique-entity";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity";
 import { Optional } from "../../../../core/types/optional";
 
 export interface DeliveryManProps {
@@ -17,7 +18,7 @@ export interface DeliveryManProps {
     updatedAt?: Date | null
 }
 
-export class DeliveryMan extends Entity<DeliveryManProps> {
+export class DeliveryMan extends AggregateRoot<DeliveryManProps> {
 
     get fullName() {
         return this.props.fullName
@@ -67,13 +68,13 @@ export class DeliveryMan extends Entity<DeliveryManProps> {
         return this.props.updatedAt
     }
 
-    private touch() {
-        this.props.updatedAt = new Date()
-    }
+    // private touch() {
+    //     this.props.updatedAt = new Date()
+    // }
 
     static create(
         props: Optional<DeliveryManProps, 'createdAt'>,
-        id?: UniqueEntity
+        id?: UniqueEntityID
     ) {
         const deliveryMan = new DeliveryMan({
             ...props,

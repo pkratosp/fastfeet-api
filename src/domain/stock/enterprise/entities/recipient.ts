@@ -1,5 +1,5 @@
 import { Entity } from "../../../../core/entities/entity";
-import { UniqueEntity } from "../../../../core/entities/unique-entity";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity";
 import { Optional } from "../../../../core/types/optional";
 
 interface RecipientProps {
@@ -21,7 +21,7 @@ export class Recipient extends Entity<RecipientProps> {
 
     static create(
         props: Optional<RecipientProps, 'createdAt'>,
-        id?: UniqueEntity
+        id?: UniqueEntityID
     ) {
         const recipient = new Recipient({
             ...props,

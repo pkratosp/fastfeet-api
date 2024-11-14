@@ -1,5 +1,5 @@
 import { Entity } from "../../../../core/entities/entity";
-import { UniqueEntity } from "../../../../core/entities/unique-entity";
+import { UniqueEntityID } from "../../../../core/entities/unique-entity";
 
 export interface AdminProps {
     fullName: string
@@ -28,7 +28,7 @@ export class Admin extends Entity<AdminProps> {
 
     static create(
         props: AdminProps,
-        id?: UniqueEntity
+        id?: UniqueEntityID
     ) {
         const admin = new Admin(props, id)
 
