@@ -5,8 +5,6 @@ import { Optional } from "../../../../core/types/optional";
 interface RecipientProps {
     nameRecipient: string
     phoneRecipient: number
-    email: string
-    password: string
     cepRecipient: number
     stateRecipient: string
     cityRecipient: string
@@ -35,24 +33,6 @@ export class Recipient extends Entity<RecipientProps> {
 
     set phoneRecipient(phoneRecipient: number) {
         this.props.phoneRecipient = phoneRecipient
-        this.touch()
-    }
-
-    get email() {
-        return this.props.email
-    }
-
-    set email(email: string) {
-        this.props.email = email
-        this.touch()
-    }
-
-    get password() {
-        return this.props.password
-    }
-
-    set password(password: string) {
-        this.props.password = password
         this.touch()
     }
 

@@ -1,6 +1,8 @@
 import { Either, right } from "../../../../core/either";
 import { DeliveryMan } from "../../enterprise/entities/delivery-man";
+import { User } from "../../enterprise/entities/user";
 import { DeliveryManRepository } from "../repositories/delivery-man-repository";
+import { UserRepository } from "../repositories/user-repository";
 
 type CreateDeliveryManUseCaseRequest = {
     fullName: string
@@ -8,6 +10,7 @@ type CreateDeliveryManUseCaseRequest = {
     dateOfBirth: string
     phone: number
     email: string
+    password: string
     state: string
     city: string
     neighborhood: string
@@ -23,9 +26,19 @@ type CreateDeliveryManUseCaseResponse = Either<
 >
 
 export class CreateDeliveryManUseCase {
-    constructor(private readonly deliveryManRepository: DeliveryManRepository) {}
+    constructor(
+        private readonly userRepository: UserRepository,
+        private readonly deliveryManRepository: DeliveryManRepository,
+    ) {}
 
     async execute(data: CreateDeliveryManUseCaseRequest): Promise<CreateDeliveryManUseCaseResponse> {
+
+        const user = User.create({
+            ...data,
+            typeUser: 'deliveryMan'
+        })
+
+        await this.userRepository.create(user)
 
         const deliveryMan = DeliveryMan.create(data)
 
