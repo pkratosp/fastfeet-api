@@ -6,6 +6,8 @@ export interface UserProps {
     email: string
     phone: number
     cpf: number
+    password: string
+    typeUser: 'admin' | 'deliveryMan'
 }
 
 export class User extends Entity<UserProps> {
@@ -24,6 +26,14 @@ export class User extends Entity<UserProps> {
 
     get cpf() {
         return this.props.cpf
+    }
+
+    get password() {
+        return this.props.password
+    }
+
+    get typeUser() {
+        return this.props.typeUser
     }
 
     static create(
