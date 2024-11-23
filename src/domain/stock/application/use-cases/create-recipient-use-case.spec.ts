@@ -20,7 +20,8 @@ describe("CreateRecipientUseCase", () => {
             numberAddressRecipient: 444,
             phoneRecipient: 9999,
             stateRecipient: 'sp',
-            streetRecipient: 'rua'
+            streetRecipient: 'rua',
+            cpfRecipient: 66666
         })
 
         expect(result.isRight()).toEqual(true)

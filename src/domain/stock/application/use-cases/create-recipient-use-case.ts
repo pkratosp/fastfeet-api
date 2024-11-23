@@ -4,6 +4,7 @@ import { Recipient } from "../../enterprise/entities/recipient";
 
 type CreateRecipientUseCaseRequest = {
     nameRecipient: string
+    cpfRecipient: number
     phoneRecipient: number
     cepRecipient: number
     stateRecipient: string

@@ -21,4 +21,10 @@ export class InMemoryRecipientRepository implements RecipientRepository {
         this.items = remove
     }
 
+
+    async findByRecipient(cpf: number): Promise<Recipient | null> {
+        const findByCPF = this.items.find((recipient) => recipient.cpfRecipient === cpf)
+
+        return findByCPF ?? null
+    }
 }

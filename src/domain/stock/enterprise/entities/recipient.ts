@@ -2,8 +2,9 @@ import { Entity } from "../../../../core/entities/entity";
 import { UniqueEntityID } from "../../../../core/entities/unique-entity";
 import { Optional } from "../../../../core/types/optional";
 
-interface RecipientProps {
+export interface RecipientProps {
     nameRecipient: string
+    cpfRecipient: number
     phoneRecipient: number
     cepRecipient: number
     stateRecipient: string
@@ -24,6 +25,15 @@ export class Recipient extends Entity<RecipientProps> {
 
     set nameRecipient(nameRecipient: string) {
         this.props.nameRecipient = nameRecipient
+        this.touch()
+    }
+
+    get cpfRecipient() {
+        return this.props.cpfRecipient
+    }
+
+    set cpfRecipient(cpfRecipient: number) {
+        this.props.cpfRecipient = cpfRecipient
         this.touch()
     }
 
