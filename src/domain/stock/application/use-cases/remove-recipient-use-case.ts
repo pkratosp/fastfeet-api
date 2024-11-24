@@ -1,29 +1,34 @@
-import { Either, left, right } from "@/core/either";
-import { RecipientRepository } from "../repositories/recipient-repository";
+import { Either, left, right } from '@/core/either';
+import { RecipientRepository } from '../repositories/recipient-repository';
 
 type RemoveRecipientUseCaseRequest = {
-    cpfRecipient: number
-}
+  cpfRecipient: number;
+};
 
-type RemoveRecipientUseCaseResponse = Either<Error, {
-    isRemoveRecipient: boolean
-}>
+type RemoveRecipientUseCaseResponse = Either<
+  Error,
+  {
+    isRemoveRecipient: boolean;
+  }
+>;
 
 export class RemoveRecipientUseCase {
-    constructor(private readonly recipientRepository: RecipientRepository) {}
+  constructor(private readonly recipientRepository: RecipientRepository) {}
 
-    async execute({ cpfRecipient }: RemoveRecipientUseCaseRequest): Promise<RemoveRecipientUseCaseResponse> {
+  async execute({
+    cpfRecipient,
+  }: RemoveRecipientUseCaseRequest): Promise<RemoveRecipientUseCaseResponse> {
+    const recipient =
+      await this.recipientRepository.findByRecipient(cpfRecipient);
 
-        const recipient = await this.recipientRepository.findByRecipient(cpfRecipient)
-
-        if(!recipient) {
-            return left(new Error('Destinatario não encontrado'))
-        }
-
-        await this.recipientRepository.delete(recipient)
-
-        return right({
-            isRemoveRecipient: true
-        })
+    if (!recipient) {
+      return left(new Error('Destinatario não encontrado'));
     }
+
+    await this.recipientRepository.delete(recipient);
+
+    return right({
+      isRemoveRecipient: true,
+    });
+  }
 }

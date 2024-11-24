@@ -1,3 +1,3 @@
 export interface IPaginationParams {
-    page: number
+  page: number;
 }

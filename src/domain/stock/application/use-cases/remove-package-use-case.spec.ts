@@ -1,27 +1,26 @@
-import { InMemoryPackageRepository } from "test/in-memory-package-repository"
-import { RemovePackageUseCase } from "./remove-package-use-case"
-import { makePackage } from "test/factories/make-package"
+import { InMemoryPackageRepository } from 'test/in-memory-package-repository';
+import { RemovePackageUseCase } from './remove-package-use-case';
+import { makePackage } from 'test/factories/make-package';
 
-let inMemoryPackageRepository: InMemoryPackageRepository
-let sut: RemovePackageUseCase
+let inMemoryPackageRepository: InMemoryPackageRepository;
+let sut: RemovePackageUseCase;
 
-describe("RemovePackageUseCase", () => {
+describe('RemovePackageUseCase', () => {
+  beforeEach(() => {
+    inMemoryPackageRepository = new InMemoryPackageRepository();
+    sut = new RemovePackageUseCase(inMemoryPackageRepository);
+  });
 
-    beforeEach(() => {
-        inMemoryPackageRepository = new InMemoryPackageRepository()
-        sut = new RemovePackageUseCase(inMemoryPackageRepository)
-    })
+  it('should be able remove package', async () => {
+    const fakePackage = makePackage();
 
-    it("should be able remove package", async () => {
+    inMemoryPackageRepository.create(fakePackage);
 
-        const fakePackage = makePackage()
+    const result = await sut.execute({
+      trackingNumber: fakePackage.trackingNumber,
+    });
 
-        inMemoryPackageRepository.create(fakePackage)
-
-        const result = await sut.execute({ trackingNumber: fakePackage.trackingNumber })
-
-        expect(result.isRight()).toEqual(true)
-        expect(inMemoryPackageRepository.items).toHaveLength(0)
-    })
-
-})
+    expect(result.isRight()).toEqual(true);
+    expect(inMemoryPackageRepository.items).toHaveLength(0);
+  });
+});

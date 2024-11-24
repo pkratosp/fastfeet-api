@@ -1,24 +1,27 @@
-import { Either, left, right } from "@/core/either";
-import { DeliveryManRepository } from "../repositories/delivery-man-repository";
-import { DeliveryMan } from "../../enterprise/entities/delivery-man";
+import { Either, left, right } from '@/core/either';
+import { DeliveryManRepository } from '../repositories/delivery-man-repository';
+import { DeliveryMan } from '../../enterprise/entities/delivery-man';
 
-type RemoveDeliveryManUseCaseRequest = DeliveryMan
+type RemoveDeliveryManUseCaseRequest = DeliveryMan;
 
-type RemoveDeliveryManUseCaseResponse = Either<Error, string>
+type RemoveDeliveryManUseCaseResponse = Either<Error, string>;
 
 export class RemoveDeliveryManUseCase {
-    constructor(private readonly deliveryManRepository: DeliveryManRepository) {}
+  constructor(private readonly deliveryManRepository: DeliveryManRepository) {}
 
-    async execute(data: RemoveDeliveryManUseCaseRequest): Promise<RemoveDeliveryManUseCaseResponse> {
+  async execute(
+    data: RemoveDeliveryManUseCaseRequest,
+  ): Promise<RemoveDeliveryManUseCaseResponse> {
+    const findDeliveryMan = await this.deliveryManRepository.findByCPF(
+      data.cpf,
+    );
 
-        const findDeliveryMan = await this.deliveryManRepository.findByCPF(data.cpf)
-
-        if(!findDeliveryMan) {
-            return left(new Error('Não encontrado'))
-        }
-
-        await this.deliveryManRepository.delete(data)
-
-        return right('ok')
+    if (!findDeliveryMan) {
+      return left(new Error('Não encontrado'));
     }
+
+    await this.deliveryManRepository.delete(data);
+
+    return right('ok');
+  }
 }
