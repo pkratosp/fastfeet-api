@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  DELIVERYMAN
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  cpf           String    @unique()
+  dateOfBirth   String
+  phone         String
+  email         String    @unique()
+  password      String
+  role          UserRole  @default(DELIVERYMAN)
+  state         String
+  city          String
+  neighborhood  String
+  street        String
+  numberAddress Int
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+
+  package Package[]
+}
+
+model Package {
+  id                 String    @id @default(uuid())
+  trackingNumber     String
+  description        String
+  weightAndDimension String
+  status             Int
+  retrieveDelivery   Boolean
+  returnedOrder      Boolean
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime? @updatedAt
+
+  recipient Recipient?
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+}
+
+model Recipient {
+  id                     String    @id @default(uuid())
+  nameRecipient          String
+  cpfRecipient           String    @unique()
+  phoneRecipient         String
+  cepRecipient           String
+  stateRecipient         String
+  cityRecipient          String
+  neighborhoodRecipient  String
+  streetRecipient        String
+  numberAddressRecipient String
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime? @updatedAt
+
+  photoPackage PhotoPackage[]
+
+  Package   Package? @relation(fields: [packageId], references: [id])
+  packageId String?  @unique
+}
+
+model PhotoPackage {
+  id  String @id @default(uuid())
+  url String
+
+  Recipient   Recipient? @relation(fields: [recipientId], references: [id])
+  recipientId String?
+}
