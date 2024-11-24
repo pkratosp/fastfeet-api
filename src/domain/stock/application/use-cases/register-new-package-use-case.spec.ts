@@ -16,7 +16,10 @@ describe("RegisterNewPackageUseCase", () => {
         const result = await sut.execute({
             description: 'description package',
             trackingNumber: randomUUID(),
-            weightAndDimension: '80 x 80 x 80'
+            weightAndDimension: '80 x 80 x 80',
+            retrieveDelivery: false,
+            returnedOrder: false,
+            status: 0
         })
 
         expect(result.isRight()).toEqual(true)

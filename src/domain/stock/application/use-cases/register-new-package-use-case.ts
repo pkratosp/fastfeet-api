@@ -6,6 +6,9 @@ type RegisterNewPackageUseCaseRequest = {
     trackingNumber: string
     description: string
     weightAndDimension: string
+    status: number // 0 enviando, 1 enviado, 2 disponivel para retirada
+    retrieveDelivery: boolean
+    returnedOrder: boolean
 }
 
 type RegisterNewPackageUseCaseResponse = Either<null, {

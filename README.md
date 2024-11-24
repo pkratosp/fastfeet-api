@@ -24,3 +24,35 @@
 - Somente o entregador que retirou a encomenda pode marcar ela como entregue
 - Somente o admin pode alterar a senha de um usuário
 - Não deve ser possível um entregador listar as encomendas de outro entregador
+
+## Instalação
+
+```bash
+$ npm install
+```
+
+## Iniciar a aplicação
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+## Test
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```

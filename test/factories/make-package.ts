@@ -11,6 +11,9 @@ export function makePackage(
         description: faker.lorem.text(),
         trackingNumber: randomUUID(),
         weightAndDimension: faker.lorem.text(),
+        retrieveDelivery: false,
+        returnedOrder: false,
+        status: 0,
         ...override
     }, id)
 
