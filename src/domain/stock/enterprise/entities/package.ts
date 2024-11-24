@@ -7,6 +7,9 @@ export interface PackageProps {
     trackingNumber: string
     description: string
     weightAndDimension: string
+    status: number // 0 enviando, 1 enviado, 2 disponivel para retirada
+    retrieveDelivery: boolean
+    returnedOrder: boolean
     createdAt: Date
     updatedAt?: Date | null
 }
@@ -38,6 +41,33 @@ export class Package extends Entity<PackageProps> {
 
     set weightAndDimension(weightAndDimension: string) {
         this.props.weightAndDimension = weightAndDimension
+        this.touch()
+    }
+
+    get status() {
+        return this.props.status
+    }
+
+    set status(status: number) {
+        this.props.status = status
+        this.touch()
+    }
+
+    get retrieveDelivery() {
+        return this.props.retrieveDelivery
+    }
+
+    set retrieveDelivery(retrieveDelivery: boolean) {
+        this.props.retrieveDelivery = retrieveDelivery
+        this.touch()
+    }
+
+    get returnedOrder() {
+        return this.props.returnedOrder
+    }
+
+    set returnedOrder(returnedOrder: boolean) {
+        this.props.returnedOrder = returnedOrder
         this.touch()
     }
 
